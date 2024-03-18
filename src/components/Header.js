@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className='header' id='header'>
       <div>
-        <img src='logo.jpg' alt='makemoments' title='MakeMoments'className='logo'/>
+        <img src={`${process.env.PUBLIC_URL}/assets/logo.jpg`} alt='makemoments' title='MakeMoments'className='logo'/>
         <h3>MakeMoments</h3>
       </div>
       <nav>
@@ -17,7 +17,7 @@ const Header = () => {
         <Link to={'games'}>Games</Link>
         <Link to={'info'}>info</Link>
         <Link to={'about'}>About Us</Link>
-        { userName ? <p> {userName} </p> : <Link to={'login'}>Login</Link>}
+        { userName ? <p> {userName} </p> : <Link to={'login'}>Log in</Link>}
       </nav>
     </header>
   )

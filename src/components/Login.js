@@ -1,18 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React,{ useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Data from '../DataContext';
-import { LuUser2 } from "react-icons/lu";
 import { BiLogoGmail} from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { AiTwotonePhone } from "react-icons/ai";
+import Data from '../DataContext';
 
-const Signup = () => {
-  const { handleSignup,setAuthPage,authPage } = useContext(Data);
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+
+const Login = () => {
+  const { handleLogin,setAuthPage,authPage } = useContext(Data);
   const [email, setEmail] = useState('');
-  const [phoneno, setPhoneno] = useState('');
+  const [password, setPassword] = useState('');
 
   const openEye = document.getElementById('openEye');
   const closeEye = document.getElementById('closeEye');
@@ -58,13 +55,13 @@ const Signup = () => {
         <h2> welcome to MakeMoments </h2>
         <img src={`${process.env.PUBLIC_URL}/assets/prototype.png`} alt='prototype' />
       </div>
-      <form className='form'> 
+      <form className='form'>
         <section>
-          <h3> signup</h3>
+          <h3>login</h3>
           <p id='errMsg' className='remove'></p>
           <div>
-            <input type='text' name='userName-input' placeholder='user name' id='userName-input' value={userName} onChange={(e) => { setUserName(e.target.value)}} required/>
-            <LuUser2 />
+            <input type='email' name='email-input' placeholder='email' id='email-input' value={email} onChange={(e) => { setEmail(e.target.value)}} required/>
+            <BiLogoGmail />
           </div>
           <div>
             <input type='password' name='password-input' placeholder='password' id='password-input' pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$' value={password} onChange={(e) =>{ setPassword(e.target.value)}} required/>
@@ -72,26 +69,15 @@ const Signup = () => {
             <FaRegEye className='remove' id='openEye'/>
             <FaRegEyeSlash className='svg' id='closeEye'/>
           </div>
-          <div>
-            <input type='email' name='email-input' placeholder='email' id='email-input' value={email} onChange={(e) => { setEmail(e.target.value)}} required/>
-            <BiLogoGmail />
-          </div>
-          <div>
-            <input type='tel' name='phoneno-input' placeholder='phone' id='phoneno-input' value={phoneno} onChange={(e) => {setPhoneno(e.target.value)}}/>
-            <AiTwotonePhone />
-          </div>
-          <div>
-          <input type="file" name='profile-input' id='profile-input' accept="image/jpeg" required/>
-          </div>
         </section>
         <section>
           <img src={`${process.env.PUBLIC_URL}/assets/authgif.gif`} alt='signup animation'/>
-          <button onClick={(event) => { handleSignup(event, userName, password, email, phoneno)}}>submit</button>
-          <p>already have an accound? <Link to={'/login'}>login</Link></p>
+          <button onClick={(event) => { handleLogin(event, email, password)}}>submit</button>
+          <p>don't have an accound? <Link to={'signup'}>signup</Link></p>
         </section>
       </form>
     </main>
   )
 }
 
-export default Signup;
+export default Login;
