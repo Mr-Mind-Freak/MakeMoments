@@ -8,11 +8,12 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 import { AiTwotonePhone } from "react-icons/ai";
 
 const Signup = () => {
-  const { handleSignup,setAuthPage,authPage } = useContext(Data);
+  const { handleSignup,setAuthPage, authPage } = useContext(Data);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phoneno, setPhoneno] = useState('');
+  const [ file, setFile ] = useState(null);
 
   const openEye = document.getElementById('openEye');
   const closeEye = document.getElementById('closeEye');
@@ -54,9 +55,9 @@ const Signup = () => {
         </video>
       </div>
       <div className='head'>
-        <img src={`${process.env.PUBLIC_URL}/assets/icon.png`} alt='complex icon' />
+        <Link to={'/'} onClick={()=>{setAuthPage(false)}}><img src={`${process.env.PUBLIC_URL}/assets/complexIcon.png`} alt='complex icon' /></Link>
         <h2> welcome to MakeMoments </h2>
-        <img src={`${process.env.PUBLIC_URL}/assets/prototype.png`} alt='prototype' />
+        <img src={file || `${process.env.PUBLIC_URL}/assets/prototype.png`} alt='prototype' />
       </div>
       <form className='form'> 
         <section>
@@ -81,7 +82,15 @@ const Signup = () => {
             <AiTwotonePhone />
           </div>
           <div>
-          <input type="file" name='profile-input' id='profile-input' accept="image/jpeg" required/>
+          <input type="file" name='profile-input' id='profile-input' accept="image/jpeg" required 
+              onChange={(e)=>{
+                const reader = new FileReader();
+                reader.onload = () =>{
+                  if(reader.readyState === 2)
+                    setFile(reader.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+              }}/>
           </div>
         </section>
         <section>

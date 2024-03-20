@@ -51,7 +51,7 @@ const Login = () => {
         </video>
       </div>
       <div className='head'>
-        <img src={`${process.env.PUBLIC_URL}/assets/icon.png`} alt='complex icon' />
+        <Link to={'/'} onClick={()=>{setAuthPage(false)}}><img src={`${process.env.PUBLIC_URL}/assets/complexIcon.png`} alt='complex icon' /></Link>
         <h2> welcome to MakeMoments </h2>
         <img src={`${process.env.PUBLIC_URL}/assets/prototype.png`} alt='prototype' />
       </div>

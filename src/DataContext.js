@@ -4,13 +4,17 @@ import axios from 'axios';
 
 const Data = createContext({});
 axios.defaults.withCredentials = true;
-const checkRefreshToken = async ( setUserName ,setAccessToken)=>{
+const checkRefreshToken = async ( setUserName ,setAccessToken, setProfile)=>{
   try {
     const res = await axios.get('http://localhost:3500/refresh');
-    console.log('with in check refresh token');
     if(res && res.data) {
       setUserName(res.data['username']);
       setAccessToken(res.data['accessToken'])
+      const pic = res.data['profile'];
+      if(pic){
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(pic.data.data)));
+        setProfile(base64);
+      }
     }
   } catch (err) {
     if(err.response){
@@ -40,15 +44,20 @@ export const DataContext = ({ children }) => {
   let [userName,setUserName] = useState(null);
   let [ accessToken, setAccessToken ] = useState(null);
   let [ authPage, setAuthPage ] = useState(false);
+  let [ profile, setProfile ] = useState(null);
   
-  const successAuthentication = (name, atoken) =>{
+  const successAuthentication = (name, atoken, pic) =>{
     setUserName(name);
     setAccessToken(atoken);
+    if(pic?.data.data){
+      const base64 = btoa(String.fromCharCode(...new Uint8Array(pic.data.data)));
+      setProfile(base64);
+    }
     setAuthPage(false);
   }
   
   useEffect( ()=>{
-    checkRefreshToken(setUserName, setAccessToken);
+    checkRefreshToken(setUserName, setAccessToken,setProfile);
   },[]);
 
   useEffect(()=>{
@@ -92,7 +101,7 @@ export const DataContext = ({ children }) => {
     try {
       const res = await axios.post('http://localhost:3500/register',bodyForm);
       if(res && res.data) {
-        successAuthentication(res.data['username'],res.data['accessToken']);
+        successAuthentication(res.data['username'],res.data['accessToken'],res.data['profile']);
         navigate('/');
       }
     } catch (err) {
@@ -110,7 +119,7 @@ export const DataContext = ({ children }) => {
     try {
       const res = await axios.post('http://localhost:3500/auth',{ email: email, password: password});
       if(res && res.data) {
-        successAuthentication(res.data['username'],res.data['accessToken']);
+        successAuthentication(res.data['username'],res.data['accessToken'],res.data['profile']);
         navigate('/');
       }
     } catch (err) {
@@ -121,7 +130,8 @@ export const DataContext = ({ children }) => {
   return (
     <Data.Provider value={{ 
         userName, setUserName, accessToken, setAccessToken,
-        handleSignup, handleLogin, authPage, setAuthPage
+        handleSignup, handleLogin, authPage, setAuthPage,
+        profile, setProfile
     }}>
       { children }
     </Data.Provider>
