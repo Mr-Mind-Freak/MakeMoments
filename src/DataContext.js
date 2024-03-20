@@ -10,11 +10,7 @@ const checkRefreshToken = async ( setUserName ,setAccessToken, setProfile)=>{
     if(res && res.data) {
       setUserName(res.data['username']);
       setAccessToken(res.data['accessToken'])
-      const pic = res.data['profile'];
-      if(pic){
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(pic.data.data)));
-        setProfile(base64);
-      }
+      setProfile(res.data['profile']);
     }
   } catch (err) {
     if(err.response){
@@ -28,9 +24,9 @@ const errorBoxModifier = (err) => {
   const errElemt =  document.querySelector('#errMsg');
   if(err.response){
     errElemt.innerHTML = `<span>${err.response.status}</span>${err.response.data.message}`
-    errElemt.classList.toggle('remove');
-    errElemt.classList.toggle('add-block');
-    errElemt.classList.toggle('errorBox');
+    errElemt.classList.remove('remove');
+    errElemt.classList.add('add-block');
+    errElemt.classList.add('errorBox');
     console.log(err.response.data.message);
     console.log(err.response.status);
   } else {
@@ -49,10 +45,7 @@ export const DataContext = ({ children }) => {
   const successAuthentication = (name, atoken, pic) =>{
     setUserName(name);
     setAccessToken(atoken);
-    if(pic?.data.data){
-      const base64 = btoa(String.fromCharCode(...new Uint8Array(pic.data.data)));
-      setProfile(base64);
-    }
+    setProfile(pic);
     setAuthPage(false);
   }
   
