@@ -34,13 +34,15 @@ const errorBoxModifier = (err) => {
   }
 }
 
-
 export const DataContext = ({ children }) => {
   const navigate = useNavigate();
   let [userName,setUserName] = useState(null);
   let [ accessToken, setAccessToken ] = useState(null);
   let [ authPage, setAuthPage ] = useState(false);
   let [ profile, setProfile ] = useState(null);
+  const [ updates, setUpdates ] = useState([]);
+  const [ movies, setMovies ] = useState([]);
+  const [ animes, setAnimes ] = useState([]);
   
   const successAuthentication = (name, atoken, pic) =>{
     setUserName(name);
@@ -48,10 +50,6 @@ export const DataContext = ({ children }) => {
     setProfile(pic);
     setAuthPage(false);
   }
-  
-  useEffect( ()=>{
-    checkRefreshToken(setUserName, setAccessToken,setProfile);
-  },[]);
 
   useEffect(()=>{
     const header = document.getElementById('header');
@@ -124,7 +122,8 @@ export const DataContext = ({ children }) => {
     <Data.Provider value={{ 
         userName, setUserName, accessToken, setAccessToken,
         handleSignup, handleLogin, authPage, setAuthPage,
-        profile, setProfile
+        profile, setProfile, updates, movies, animes, setUpdates, setMovies, setAnimes,
+        checkRefreshToken
     }}>
       { children }
     </Data.Provider>
