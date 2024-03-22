@@ -34,7 +34,6 @@ const errorBoxModifier = (err) => {
   }
 }
 
-
 export const DataContext = ({ children }) => {
   const navigate = useNavigate();
   let [userName,setUserName] = useState(null);
@@ -42,16 +41,13 @@ export const DataContext = ({ children }) => {
   let [ authPage, setAuthPage ] = useState(false);
   let [ profile, setProfile ] = useState(null);
   
+  
   const successAuthentication = (name, atoken, pic) =>{
     setUserName(name);
     setAccessToken(atoken);
     setProfile(pic);
     setAuthPage(false);
   }
-  
-  useEffect( ()=>{
-    checkRefreshToken(setUserName, setAccessToken,setProfile);
-  },[]);
 
   useEffect(()=>{
     const header = document.getElementById('header');
@@ -124,7 +120,7 @@ export const DataContext = ({ children }) => {
     <Data.Provider value={{ 
         userName, setUserName, accessToken, setAccessToken,
         handleSignup, handleLogin, authPage, setAuthPage,
-        profile, setProfile
+        profile, setProfile, checkRefreshToken
     }}>
       { children }
     </Data.Provider>
