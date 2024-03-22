@@ -2,14 +2,14 @@ import React,{ useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Data from '../DataContext';
 
-
 const LandingPage = () => {
     const { checkRefreshToken, setUserName, setAccessToken,setProfile, setAuthPage } = useContext(Data);
     checkRefreshToken(setUserName, setAccessToken,setProfile);
 
     useEffect(()=>{
         setAuthPage(true);
-    })
+    },[setAuthPage]);
+
   return (
     <main className='landing'>
       <section className='section1'>

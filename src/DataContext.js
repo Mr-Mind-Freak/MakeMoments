@@ -40,9 +40,7 @@ export const DataContext = ({ children }) => {
   let [ accessToken, setAccessToken ] = useState(null);
   let [ authPage, setAuthPage ] = useState(false);
   let [ profile, setProfile ] = useState(null);
-  const [ updates, setUpdates ] = useState([]);
-  const [ movies, setMovies ] = useState([]);
-  const [ animes, setAnimes ] = useState([]);
+  
   
   const successAuthentication = (name, atoken, pic) =>{
     setUserName(name);
@@ -122,8 +120,7 @@ export const DataContext = ({ children }) => {
     <Data.Provider value={{ 
         userName, setUserName, accessToken, setAccessToken,
         handleSignup, handleLogin, authPage, setAuthPage,
-        profile, setProfile, updates, movies, animes, setUpdates, setMovies, setAnimes,
-        checkRefreshToken
+        profile, setProfile, checkRefreshToken
     }}>
       { children }
     </Data.Provider>
