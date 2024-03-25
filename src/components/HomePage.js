@@ -87,7 +87,7 @@ const { setAuthPage } = useContext(Data);
             <p> actress : { actress} </p>
             <p> director : { director} </p>
             <p> music : { music} </p>
-            <Link to={'updates'}>see all{'>>'}</Link>
+            <Link to={'/updates'}>see all{'>>'}</Link>   {/* changes happened here*/}
           </div>
           <IoMdArrowDropright onClick={()=>{ 
             if(count > updateData.length){
@@ -152,7 +152,7 @@ const { setAuthPage } = useContext(Data);
                 <img src={''} alt='movie5' />
             </div>
         </div>
-        <Link to={'movies'}>see all{'>>'}</Link>
+        <Link to={'/movies'}>see all{'>>'}</Link> {/* changes happened here */}
       </section>
       <div id='onepunchmanEye'></div>
       <section className='animes'>
@@ -174,7 +174,7 @@ const { setAuthPage } = useContext(Data);
                 <img src={''} alt='anime5' />
             </div>
         </div>
-        <Link to={'movies'}>see all{'>>'}</Link>
+        <Link to={'/movies'}>see all{'>>'}</Link> {/* changes happened here */}
       </section>
     </main>
   )

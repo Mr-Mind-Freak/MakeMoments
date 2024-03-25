@@ -9,14 +9,16 @@ const checkRefreshToken = async ( setUserName ,setAccessToken, setProfile)=>{
     const res = await axios.get('http://localhost:3500/refresh');
     if(res && res.data) {
       setUserName(res.data['username']);
-      setAccessToken(res.data['accessToken'])
+      setAccessToken(res.data['accessToken']);
       setProfile(res.data['profile']);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${res.data['accessToken']}`
     }
   } catch (err) {
     if(err.response){
       console.log(err.response.data.message);
       console.log(err.response.status);
     }
+    console.log(`Error : ${err.message}`);
   }
 }
 
@@ -40,6 +42,12 @@ export const DataContext = ({ children }) => {
   let [ accessToken, setAccessToken ] = useState(null);
   let [ authPage, setAuthPage ] = useState(false);
   let [ profile, setProfile ] = useState(null);
+  const [ screen, setScreen ] = useState({});
+  const [ time, setTime ] = useState(null);
+  const [ date, setDate ] = useState(null);
+  const [ cost, setCost ] = useState(0);
+  const [ selectedSeats, setSelectedSeats ] = useState([]);
+  const [ snacksCost, setSnacksCost] = useState(0);
   
   
   const successAuthentication = (name, atoken, pic) =>{
@@ -47,6 +55,7 @@ export const DataContext = ({ children }) => {
     setAccessToken(atoken);
     setProfile(pic);
     setAuthPage(false);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   }
 
   useEffect(()=>{
@@ -115,12 +124,28 @@ export const DataContext = ({ children }) => {
       errorBoxModifier(err);
     }
   }
+  //changes happened here
+  const fetchScreenData = async() => {
+    try{
+      const res = await axios.get('http://localhost:3500/screens/goat');
+      if(res && res.data) {
+        setScreen(res.data);
+      }
+    } catch(err) {
+      if(err.response){
+        console.log(err.response.data.message);
+        console.log(err.response.status);
+      }
+      console.log(`Error : ${err.message}`);
+    }
 
+  }
   return (
     <Data.Provider value={{ 
         userName, setUserName, accessToken, setAccessToken,
         handleSignup, handleLogin, authPage, setAuthPage,
-        profile, setProfile, checkRefreshToken
+        profile, setProfile, checkRefreshToken, fetchScreenData, screen, time, date,
+        setTime, setDate, cost, setCost, selectedSeats, setSelectedSeats, setSnacksCost, snacksCost
     }}>
       { children }
     </Data.Provider>

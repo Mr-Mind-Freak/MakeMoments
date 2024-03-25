@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Data from '../DataContext';
 import { LuUser2 } from "react-icons/lu";
@@ -43,9 +43,11 @@ const Signup = () => {
   if(closeEye){
     closeEye.addEventListener('click',closeEyeListener);
   }
-
-  if(!authPage)
-  setAuthPage(true);
+  //changes happened here
+  useEffect(()=>{
+    if(!authPage)
+     setAuthPage(true);
+  },[authPage, setAuthPage]);
 
   return (
     <main className='signup'>

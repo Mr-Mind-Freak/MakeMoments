@@ -1,4 +1,4 @@
-import React,{ useContext, useState } from 'react';
+import React,{ useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BiLogoGmail} from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa6";
@@ -39,9 +39,11 @@ const Login = () => {
   if(closeEye){
     closeEye.addEventListener('click',closeEyeListener);
   }
-
-  if(!authPage)
-  setAuthPage(true);
+  //changes happened here
+  useEffect(()=>{
+    if(!authPage)
+    setAuthPage(true);
+  },[setAuthPage,authPage]);
 
   return (
     <main className='signup'>
